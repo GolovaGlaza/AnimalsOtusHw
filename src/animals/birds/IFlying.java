@@ -2,6 +2,6 @@ package animals.birds;
 
 public interface IFlying {
 
-    void Fly();
+    void fly();
 
 }

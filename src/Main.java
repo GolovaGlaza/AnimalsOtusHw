@@ -15,44 +15,53 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Animal> animals = new ArrayList();
+        ArrayList<Animal> animals = new ArrayList<>();
 
-        while (true){
+        while (true) {
             String commandStr;
             do {
                 System.out.println("Введите одну из команд add/list/exit");
                 commandStr = scanner.next().toUpperCase().trim();
+                if (!commandStr.equals("ADD") && !commandStr.equals("LIST") && !commandStr.equals("EXIT")) {
+                    System.out.println("Неверная команда. Пожалуйста, попробуйте снова.");
+                }
+
             }
             while (!commandStr.equals("ADD") && !commandStr.equals("LIST") && !commandStr.equals("EXIT"));
             CommandData commandData = CommandData.valueOf(commandStr);
-            switch (commandData){
+            switch (commandData) {
                 case ADD:
                     String animalStr;
-                  do{
-                      System.out.println("Введите тип животного cat/dog/duck");
-                      animalStr = scanner.next().trim().toUpperCase();
-                  }
-                  while (!animalStr.equals("CAT") && !animalStr.equals("DOG") && !animalStr.equals("DUCK"));
+                    do {
+                        System.out.println("Введите тип животного cat/dog/duck");
+                        animalStr = scanner.next().trim().toUpperCase();
+                        if (!animalStr.equals("CAT") && !animalStr.equals("DOG") && !animalStr.equals("DUCK")) {
+                            System.out.println("Неверный тип животного");
+                        }
+                    }
+                    while (!animalStr.equals("CAT") && !animalStr.equals("DOG") && !animalStr.equals("DUCK"));
                     AnimalTypeData animalTypeData = AnimalTypeData.valueOf(animalStr);
                     AnimalFactory animalFactory = new AnimalFactory();
                     Animal animal = animalFactory.creatAnimal(animalTypeData);
 
-                    if (animal instanceof IFlying){
-                        ((IFlying) animal).Fly();
+
+                    newAnimal(animal);
+                    animals.add(animal);
+                    System.out.println("Животное добавлено");
+
+                    if (animal instanceof IFlying) {
+                        ((IFlying) animal).fly();
                     }
 
-                    Animal animal1 = newAnimal(animal);
-                    animals.add(animal);
                     animal.say();
                     break;
 
 
                 case LIST:
-                    if (animals.size() == 0){
+                    if (animals.size() == 0) {
                         System.out.println("Вы не добавили ни одного животного");
-                    }
-                    else {
-                        System.out.println(animals.toString());
+                    } else {
+                        System.out.println(animals);
                     }
                     break;
 
@@ -60,57 +69,71 @@ public class Main {
                     System.exit(0);
             }
 
-            }
-
         }
-        public static Animal newAnimal(Animal animals){
+
+    }
+
+    private static Animal newAnimal(Animal animals) {
         System.out.println("Введите имя животного");
         String name = scanner.next();
         animals.setName(name);
 
+
+
         System.out.println("Введите возраст животного");
         int age;
-        int i = 1;
-        while (i < 2) {
-            age = scanner.nextInt();
-            if (age > 0 & age < 1000 ) {
-                i = 2;
+
+        while (true) {
+            if (scanner.hasNextInt()) {
+                age = scanner.nextInt();
+                if (age > 0 & age < 1000) {
+                    break;
+                } else {
+                    System.out.println("Неверный возраст. Введите возраст животного снова");
+                }
+            } else {
+                System.out.println("Пожалуйста, введите целое число.");
+                scanner.next(); // Очистка неправильного ввода
             }
-            else {
-                System.out.println("Неверный возраст. Введите возраст животного снова");
-            }
-            animals.setAge(age);
         }
+        animals.setAge(age);
 
         System.out.println("Введите вес животного");
         int weight;
-        int s = 2;
-        while (s < 3){
-            weight = scanner.nextInt();
-            if (weight > 0 & weight < 1000){
-                s = 3;
+
+        while (true) {
+            if (scanner.hasNextInt()) {
+                weight = scanner.nextInt();
+                if (weight > 0 & weight < 1000) {
+                    break;
+                } else {
+                    System.out.println("Неверный вес. Введите вес животно снова");
+                }
+            } else {
+                System.out.println("Пожалуйста, введите целое число.");
+                scanner.next(); // Очистка неправильного ввода
             }
-            else {
-                System.out.println("Неверный вес. Введите вес животно снова");
-            }
-            animals.setWeight(weight);
         }
+        animals.setWeight(weight);
+
 
         String colorStr;
         do {
             System.out.println("Введите цвет животного: BLACK/WHITE/RED/GREY");
             colorStr = scanner.next().trim().toUpperCase();
+            if (!colorStr.equals("BLACK") & !colorStr.equals("WHITE") & !colorStr.equals("RED") & !colorStr.equals("GREY")) {
+                System.out.println("Неверный цвет. Пожалуйста, попробуйте снова");
+            }
+
         }
         while (!colorStr.equals("BLACK") & !colorStr.equals("WHITE") & !colorStr.equals("RED") & !colorStr.equals("GREY"));
         ColorData colorData = ColorData.valueOf(colorStr);
         animals.setColor(colorData.getName());
 
 
-
         return animals;
-        }
-        }
-
+    }
+}
 
 
 
