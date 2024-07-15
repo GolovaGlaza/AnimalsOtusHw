@@ -1,13 +1,13 @@
 package animals;
 
-import data.ColorData;
-
 public abstract class Animal {
 
     private String name;
     private int age;
     private int weight;
     private String color;
+    private String type;
+
 
 
     public String getName() {
@@ -26,11 +26,11 @@ public abstract class Animal {
         this.age = age;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight( int weight) {
         this.weight = weight;
     }
 
@@ -41,6 +41,16 @@ public abstract class Animal {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public String getType(){
+        return type;
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
+
+
 
 
     public abstract void say();
@@ -59,7 +69,7 @@ public abstract class Animal {
 
     @Override
     public String toString() {
-        return String.format("Привет! Меня зовут %s, мне %d %s, я вешу - %.1f кг, мой цвет - %s",
+        return String.format("Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s",
                 getName(), getAge(), getYearPadej(), getWeight(), getColor());
     }
 

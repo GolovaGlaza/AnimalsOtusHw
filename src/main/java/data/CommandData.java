@@ -3,5 +3,8 @@ package data;
 public enum CommandData {
     ADD,
     LIST,
-    EXIT
+    EXIT,
+    LISTALL,
+    UPDATE,
+    FILTER,
 }
