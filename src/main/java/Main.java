@@ -31,13 +31,13 @@ public class Main {
                 System.out.println("Введите одну из команд add/list/listall/update/filter/exit");
                 commandStr = scanner.next().toUpperCase().trim();
                 if (!commandStr.equals("ADD") && !commandStr.equals("LIST") && !commandStr.equals("EXIT") && !commandStr.equals("LISTALL")
-                && !commandStr.equals("UPDATE") && !commandStr.equals("FILTER")) {
+                        && !commandStr.equals("UPDATE") && !commandStr.equals("FILTER")) {
                     System.out.println("Неверная команда. Пожалуйста, попробуйте снова.");
                 }
 
             }
             while (!commandStr.equals("ADD") && !commandStr.equals("LIST") && !commandStr.equals("EXIT") && !commandStr.equals("LISTALL")
-            && !commandStr.equals("UPDATE") && !commandStr.equals("FILTER"));
+                    && !commandStr.equals("UPDATE") && !commandStr.equals("FILTER"));
             CommandData commandData = CommandData.valueOf(commandStr);
             switch (commandData) {
                 case ADD:
@@ -55,9 +55,7 @@ public class Main {
                     Animal animal = animalFactory.creatAnimal(animalTypeData);
                     newAnimal(animal);
 
-                    String sql = String.format("INSERT INTO animals (Имя, Возраст, Вес, Цвет, Тип) VALUES ('%s', %d, %d, '%s', '%s')",
-                        animal.getName(), animal.getAge(), animal.getWeight(), animal.getColor(), animalTypeData.getName());
-                    animalTable.getIdbConnecter().execute(sql);
+                    animalTable.insertAnimal(animal, animalTypeData.getName());
                     animals.add(animal);
                     System.out.println("Животное добавлено");
 
@@ -161,11 +159,9 @@ public class Main {
     }
 
 
-
-
     private static void listAnimals() throws SQLException {
         ResultSet resultSet = animalTable.listAll();
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String name = resultSet.getString("Имя");
             int age = resultSet.getInt("Возраст");
@@ -179,10 +175,10 @@ public class Main {
 
     private static void listAnimalsByType() throws SQLException {
         String typeStr;
-        do{
+        do {
             System.out.println("Введите тип животного для фильтрации: cat/dog/duck");
             typeStr = scanner.next().toUpperCase();
-            if (!typeStr.equals("CAT") && !typeStr.equals("DOG") && !typeStr.equals("DUCK")){
+            if (!typeStr.equals("CAT") && !typeStr.equals("DOG") && !typeStr.equals("DUCK")) {
                 System.out.println("Неверный тип животного. Пожалуйста, попробуйте снова.");
             }
         }
@@ -192,7 +188,7 @@ public class Main {
         String animalType = animalTypeData.getName();
 
         ResultSet resultSet = animalTable.listByType(animalType);
-        while (resultSet.next()){
+        while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String name = resultSet.getString("Имя");
             int age = resultSet.getInt("Возраст");
@@ -200,7 +196,7 @@ public class Main {
             String color = resultSet.getString("цвет");
             String type = resultSet.getString("Тип");
             System.out.printf("id: %d, Имя: %s, Возраст: %d, Вес: %d, Цвет: %s, Тип: %s%n",
-                   id, name, age, weight, color, type);
+                    id, name, age, weight, color, type);
         }
     }
 
@@ -208,7 +204,6 @@ public class Main {
         System.out.println("Введите имя животного");
         String name = scanner.next();
         animals.setName(name);
-
 
 
         System.out.println("Введите возраст животного");

@@ -10,7 +10,6 @@ public class MySqlDBConnecter implements IDBConnecter {
 
     private DBCongifurator dbCongifurator = new DBCongifurator();
 
-
     private static Statement statement = null;
 
     private static Connection connection = null;
